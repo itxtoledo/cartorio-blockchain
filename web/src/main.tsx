@@ -1,28 +1,62 @@
+/* eslint-disable react-refresh/only-export-components */
 import * as React from "react";
 import * as ReactDOM from "react-dom/client";
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import "./index.css";
-import Root, { loader as rootLoader } from "./routes/root";
+import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import ErrorPage from "./error-page";
-import Contact from "./routes/contact";
+import AuthProvider from "./providers/AuthProvider";
+import SiteTemplate from "./components/common/SiteTemplate";
+import Login from "./pages/auth/Login";
+import LostPassword from "./pages/auth/LostPassword";
+import ResetPassword from "./pages/auth/ResetPassword";
+import Register from "./pages/auth/Register";
+import "bootswatch/dist/litera/bootstrap.min.css";
+import { useAuth } from "./hooks/useAuth";
 
-const router = createBrowserRouter([
-  {
-    path: "/",
-    element: <Root />,
-    errorElement: <ErrorPage />,
-    loader: rootLoader,
-    children: [
-      {
-        path: "contacts/:contactId",
-        element: <Contact />,
-      },
-    ],
-  },
-]);
+const RequireAuth: React.FC<{ children: React.ReactElement }> = ({
+  children,
+}) => {
+  const auth = useAuth();
+
+  if (auth.startup) {
+    return <p>Loading...</p>;
+  }
+
+  return auth.user ? children : <Navigate to="/" />;
+};
+
+const PublicRoute: React.FC<{ children: React.ReactElement }> = ({
+  children,
+}) => {
+  const auth = useAuth();
+
+  if (auth.startup) {
+    return <p>Loading...</p>;
+  }
+
+  return !auth.user ? children : <Navigate to="/dashboard" />;
+};
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
-    <RouterProvider router={router} />
+    <BrowserRouter>
+      <AuthProvider>
+        <Routes>
+          <Route path="/" element={<Navigate to="/auth/login" />} />
+          <Route
+            path="/auth"
+            element={
+              <PublicRoute>
+                <SiteTemplate />
+              </PublicRoute>
+            }
+          >
+            <Route path="login" element={<Login />} />
+            <Route path="register" element={<Register />} />
+            <Route path="lost-password" element={<LostPassword />} />
+            <Route path="reset-password" element={<ResetPassword />} />
+          </Route>
+        </Routes>
+      </AuthProvider>
+    </BrowserRouter>
   </React.StrictMode>
 );
