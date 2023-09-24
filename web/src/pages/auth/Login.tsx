@@ -13,7 +13,6 @@ import { Link, useLocation } from "react-router-dom";
 import CustomButton from "../../components/common/CustomButton";
 import { useAPI } from "../../hooks/useAPI";
 import { LoginParameters, RegisterParameters } from "../../types/API";
-import LogoImage from "../../components/common/LogoImage";
 
 const Login: React.FC = () => {
   const auth = useAuth();
@@ -61,67 +60,60 @@ const Login: React.FC = () => {
   }, [data]);
 
   return (
-    <main className="h-100 d-flex align-items-center py-4">
-      <div style={{ maxWidth: 500 }} className="m-auto">
-        <Card body>
-          <Form
-            style={{ maxWidth: 500 }}
-            onSubmit={onSubmit}
-            initialData={data}
-          >
-            <LogoImage />
-            <h1 className="h3 mb-3 fw-normal">Por favor faça login</h1>
+    <div style={{ maxWidth: 500 }} className="m-auto">
+      <Card body>
+        <Form style={{ maxWidth: 500 }} onSubmit={onSubmit} initialData={data}>
+          <h1 className="h3 mb-3 fw-normal">Por favor faça login</h1>
 
+          <FormGroup>
+            <Label htmlFor="email">Email</Label>
+            <UnformInput
+              type="email"
+              id="email"
+              placeholder="name@example.com"
+              name="email"
+              onChange={({ target }) => setChangedEmail(target.value)}
+              required
+            />
+          </FormGroup>
+          <Collapse isOpen={changedEmail.length > 0}>
             <FormGroup>
-              <Label htmlFor="email">Email</Label>
+              <Label htmlFor="floatingPassword">Senha</Label>
               <UnformInput
-                type="email"
-                id="email"
-                placeholder="name@example.com"
-                name="email"
-                onChange={({ target }) => setChangedEmail(target.value)}
+                type="password"
+                id="floatingPassword"
+                placeholder="Password"
+                name="password"
                 required
               />
             </FormGroup>
-            <Collapse isOpen={changedEmail.length > 0}>
-              <FormGroup>
-                <Label htmlFor="floatingPassword">Senha</Label>
-                <UnformInput
-                  type="password"
-                  id="floatingPassword"
-                  placeholder="Password"
-                  name="password"
-                  required
-                />
-              </FormGroup>
 
-              <p>
-                <Link to="/auth/lost-password" state={{ email: changedEmail }}>
-                  Esqueci a senha
-                </Link>
-              </p>
-            </Collapse>
-
-            <CustomButton
-              loading={loading}
-              size="lg"
-              type="submit"
-              color="primary"
-              block
-            >
-              Entrar
-            </CustomButton>
-            <p className="mt-3">
-              Não tem uma conta?{" "}
-              <Link to="/auth/register" state={{ email: changedEmail }}>
-                Registre-se aqui.
+            <p>
+              <Link to="/auth/lost-password" state={{ email: changedEmail }}>
+                Esqueci a senha
               </Link>
             </p>
-            <p className="mt-3 mb-3 text-muted">© 2022-2023</p>
-          </Form>
-        </Card>
-      </div>
-    </main>
+          </Collapse>
+
+          <CustomButton
+            loading={loading}
+            size="lg"
+            type="submit"
+            color="primary"
+            block
+          >
+            Entrar
+          </CustomButton>
+          <p className="mt-3">
+            Não tem uma conta?{" "}
+            <Link to="/auth/register" state={{ email: changedEmail }}>
+              Registre-se aqui.
+            </Link>
+          </p>
+          <p className="mt-3 mb-3 text-muted">© 2022-2023</p>
+        </Form>
+      </Card>
+    </div>
   );
 };
 

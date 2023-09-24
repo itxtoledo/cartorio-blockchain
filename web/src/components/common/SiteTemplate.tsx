@@ -50,10 +50,10 @@ const SiteTemplate: React.FC = () => {
           </Collapse>
         </Navbar>
       </header>
-      <main className="flex-shrink-0">
+      <main className="h-100 d-flex bg-body-tertiary">
         <Outlet />
       </main>
-      <footer className="footer mt-auto py-3 bg-body-tertiary">
+      <footer className="footer mt-auto py-3 bg-body-secondary ">
         <div className="container">
           <span className="text-body-secondary">
             Place sticky footer content here.

@@ -60,6 +60,34 @@ export class API {
 
     return res.data;
   }
+
+  async registerDocument(document: File) {
+    const formData = new FormData();
+    console.log(document, typeof document);
+
+    formData.append("file", document);
+    formData.append("user", "2");
+
+    console.log(formData.keys());
+
+    for (const [key, value] of formData.entries()) {
+      console.log(key, value);
+    }
+
+    const res = await this.api.post<GenericResponse>(
+      "/notary/register",
+      formData,
+      {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      }
+    );
+
+    console.log(res);
+
+    return res.data;
+  }
 }
 
 export const parseAxiosErrorMessage = (error: AxiosError) => {

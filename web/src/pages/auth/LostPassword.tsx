@@ -56,42 +56,40 @@ const LostPassword: React.FC = () => {
   };
 
   return (
-    <main className="h-100 d-flex align-items-center py-4 bg-light">
-      <div style={{ maxWidth: 500 }} className="m-auto">
-        <Card body>
-          <Form ref={formRef} onSubmit={onSubmit}>
-            <LogoImage />
-            <h1 className="h3 mb-3 fw-normal">Esqueci a senha</h1>
-            <FormGroup>
-              <Label htmlFor="email">Email</Label>
-              <UnformInput
-                type="email"
-                id="email"
-                placeholder="name@example.com"
-                name="email"
-                autoComplete="email"
-                required
-              />
-            </FormGroup>
+    <div style={{ maxWidth: 500 }} className="m-auto">
+      <Card body>
+        <Form ref={formRef} onSubmit={onSubmit}>
+          <LogoImage />
+          <h1 className="h3 mb-3 fw-normal">Esqueci a senha</h1>
+          <FormGroup>
+            <Label htmlFor="email">Email</Label>
+            <UnformInput
+              type="email"
+              id="email"
+              placeholder="name@example.com"
+              name="email"
+              autoComplete="email"
+              required
+            />
+          </FormGroup>
 
-            <p>
-              Já tem um código?{" "}
-              <Link to="/auth/reset-password">Redefina sua senha.</Link>
-            </p>
+          <p>
+            Já tem um código?{" "}
+            <Link to="/auth/reset-password">Redefina sua senha.</Link>
+          </p>
 
-            <CustomButton
-              block
-              size="lg"
-              type="submit"
-              color="primary"
-              loading={loading}
-            >
-              Enviar
-            </CustomButton>
-          </Form>
-        </Card>
-      </div>
-    </main>
+          <CustomButton
+            block
+            size="lg"
+            type="submit"
+            color="primary"
+            loading={loading}
+          >
+            Enviar
+          </CustomButton>
+        </Form>
+      </Card>
+    </div>
   );
 };
 

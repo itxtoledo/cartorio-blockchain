@@ -1,8 +1,9 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable react-refresh/only-export-components */
 import * as React from "react";
 import * as ReactDOM from "react-dom/client";
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
-import ErrorPage from "./error-page";
+
 import AuthProvider from "./providers/AuthProvider";
 import SiteTemplate from "./components/common/SiteTemplate";
 import Login from "./pages/auth/Login";
@@ -11,6 +12,7 @@ import ResetPassword from "./pages/auth/ResetPassword";
 import Register from "./pages/auth/Register";
 import "bootswatch/dist/litera/bootstrap.min.css";
 import { useAuth } from "./hooks/useAuth";
+import NotarizeDocument from "./pages/notary/NotarizeDocument";
 
 const RequireAuth: React.FC<{ children: React.ReactElement }> = ({
   children,
@@ -54,6 +56,17 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
             <Route path="register" element={<Register />} />
             <Route path="lost-password" element={<LostPassword />} />
             <Route path="reset-password" element={<ResetPassword />} />
+          </Route>
+          <Route
+            path="/notary"
+            element={
+              <PublicRoute>
+                <SiteTemplate />
+              </PublicRoute>
+            }
+          >
+            <Route path="notarize-document" element={<NotarizeDocument />} />
+            <Route path="verify-document" element={<NotarizeDocument />} />
           </Route>
         </Routes>
       </AuthProvider>

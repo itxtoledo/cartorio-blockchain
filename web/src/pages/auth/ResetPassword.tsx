@@ -57,49 +57,47 @@ const ResetPassword: React.FC = () => {
   }, [searchParams]);
 
   return (
-    <main className="h-100 d-flex align-items-center py-4 bg-light">
-      <div style={{ maxWidth: 500 }} className="m-auto">
-        <Card body>
-          <Form ref={formRef} onSubmit={onSubmit}>
-            <LogoImage />{" "}
-            <h1 className="h3 mb-3 fw-normal">Redefinição de senha</h1>
-            <FormGroup>
-              <Label htmlFor="token">Código enviado por e-mail</Label>
-              <UnformInput
-                type="text"
-                id="token"
-                placeholder="Código"
-                name="token"
-                required
-              />
-            </FormGroup>
-            <FormGroup>
-              <Label htmlFor="newPassword">Nova senha</Label>
-              <UnformInput
-                type="password"
-                id="newPassword"
-                placeholder="Nova senha"
-                name="password"
-                autoComplete="new-password"
-                required
-              />
-            </FormGroup>
-            <p>
-              Já tem uma conta? <Link to="/auth/login">Faça login.</Link>
-            </p>
-            <CustomButton
-              block
-              size="lg"
-              type="submit"
-              color="primary"
-              loading={loading}
-            >
-              Redefinir senha
-            </CustomButton>
-          </Form>
-        </Card>
-      </div>
-    </main>
+    <div style={{ maxWidth: 500 }} className="m-auto">
+      <Card body>
+        <Form ref={formRef} onSubmit={onSubmit}>
+          <LogoImage />{" "}
+          <h1 className="h3 mb-3 fw-normal">Redefinição de senha</h1>
+          <FormGroup>
+            <Label htmlFor="token">Código enviado por e-mail</Label>
+            <UnformInput
+              type="text"
+              id="token"
+              placeholder="Código"
+              name="token"
+              required
+            />
+          </FormGroup>
+          <FormGroup>
+            <Label htmlFor="newPassword">Nova senha</Label>
+            <UnformInput
+              type="password"
+              id="newPassword"
+              placeholder="Nova senha"
+              name="password"
+              autoComplete="new-password"
+              required
+            />
+          </FormGroup>
+          <p>
+            Já tem uma conta? <Link to="/auth/login">Faça login.</Link>
+          </p>
+          <CustomButton
+            block
+            size="lg"
+            type="submit"
+            color="primary"
+            loading={loading}
+          >
+            Redefinir senha
+          </CustomButton>
+        </Form>
+      </Card>
+    </div>
   );
 };
 
