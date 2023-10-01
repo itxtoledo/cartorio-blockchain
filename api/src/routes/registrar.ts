@@ -1,21 +1,39 @@
 import express from "express";
-import formidable from "formidable";
+import * as formidable from "formidable";
+import crypto from "crypto";
+import fs from "fs";
 
 const route = express.Router();
 
-route.post("/register", (req, res, next) => {
+route.post("/register", async (req, res, next) => {
   // compute file hash
 
-  const form = formidable({});
+  const form = new formidable.IncomingForm({
+    maxFiles: 1,
+    maxFields: 2,
+    allowEmptyFiles: false,
+  });
 
-  form.parse(req, (err, fields, files) => {
-    if (err) {
-      next(err);
-      return;
-    }
+  const [fields, files] = await form.parse(req);
 
-    console.log("/register", files);
-    res.json({ fields, files });
+  const file = files.file![0] as unknown as formidable.File;
+
+  const readStream = fs.createReadStream(file.filepath);
+
+  // Criar um hash SHA-256
+  const hash = crypto.createHash("sha256");
+
+  // Atualize o hash com o conteúdo do arquivo
+  readStream.on("data", (chunk) => {
+    hash.update(chunk);
+  });
+
+  readStream.on("close", () => {
+    // Finalize o hash e obtenha a representação hexadecimal
+    const hashHex = hash.digest("hex");
+
+    // TODO send to blockchain
+    res.json({ fileHash: hashHex, txid: "" });
   });
 });
 
