@@ -1,95 +1,58 @@
 import { expect } from "chai";
 import { ethers } from "hardhat";
+import { FileHashRegistry } from "../typechain-types";
 
-describe("FileHashRegistry", function () {
-  let FileHashRegistry;
-  let fileHashRegistry;
-  let owner;
-  let addr1;
-  let addr2;
+describe("FileHashRegistry", () => {
+  let fileHashRegistry: FileHashRegistry;
 
-  beforeEach(async function () {
-    [owner, addr1, addr2] = await ethers.getSigners();
-
-    FileHashRegistry = await ethers.getContractFactory("FileHashRegistry");
-    fileHashRegistry = await FileHashRegistry.deploy();
-    await fileHashRegistry.deployed();
+  beforeEach(async () => {
+    const FileHashRegistryFactory = await ethers.getContractFactory(
+      "FileHashRegistry"
+    );
+    fileHashRegistry = await FileHashRegistryFactory.deploy();
   });
 
-  it("Should register a file hash", async function () {
-    const fileHash =
-      "0x1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef";
+  const registerFile = async (fileName: string, fileSize: number) => {
+    const fileHash = ethers.hashMessage(fileName);
+    await fileHashRegistry.registerFileHash(fileHash, fileName, fileSize);
+    return fileHash;
+  };
+
+  it("should register a file hash", async () => {
     const fileName = "test.txt";
-    const fileSize = 1000;
+    const fileSize = 100;
 
-    await fileHashRegistry
-      .connect(addr1)
-      .registerFileHash(fileHash, fileName, fileSize);
+    const fileHash = await registerFile(fileName, fileSize);
 
-    const entry = await fileHashRegistry.fileEntries(fileHash);
-    expect(entry.fileName).to.equal(fileName);
-    expect(entry.fileSize).to.equal(fileSize);
-    expect(entry.sender).to.equal(addr1.address);
+    const fileEntry = await fileHashRegistry.getFileEntryByHash(fileHash);
+
+    expect(fileEntry[0]).to.equal(fileName);
+    expect(fileEntry[1]).to.equal(fileSize);
+    expect(fileEntry[2]).to.be.above(0);
+    expect(fileEntry[3]).to.be.above(0);
   });
 
-  it("Should not allow duplicate file hashes", async function () {
-    const fileHash =
-      "0x1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef";
+  it("should return correct files count", async () => {
+    const initialCount = await fileHashRegistry.getFilesCount();
+
     const fileName = "test.txt";
-    const fileSize = 1000;
+    const fileSize = 100;
 
-    await fileHashRegistry
-      .connect(addr1)
-      .registerFileHash(fileHash, fileName, fileSize);
+    await registerFile(fileName, fileSize);
 
-    // Try to register the same file hash again
+    const finalCount = await fileHashRegistry.getFilesCount();
+
+    expect(finalCount).to.equal(initialCount + 1n);
+  });
+
+  it("should revert when registering a file hash that already exists", async () => {
+    const fileName = "test.txt";
+    const fileSize = 100;
+
+    await registerFile(fileName, fileSize);
+
     await expect(
-      fileHashRegistry
-        .connect(addr2)
-        .registerFileHash(fileHash, fileName, fileSize)
-    ).to.be.revertedWith("Hash already exists");
-  });
-
-  it("Should return the correct number of file hashes", async function () {
-    const fileHash1 =
-      "0x1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef";
-    const fileHash2 =
-      "0xabcdef1234567890abcdef1234567890abcdef1234567890abcdef1234567890";
-    const fileName1 = "test1.txt";
-    const fileName2 = "test2.txt";
-    const fileSize = 1000;
-
-    await fileHashRegistry
-      .connect(addr1)
-      .registerFileHash(fileHash1, fileName1, fileSize);
-    await fileHashRegistry
-      .connect(addr1)
-      .registerFileHash(fileHash2, fileName2, fileSize);
-
-    const count = await fileHashRegistry.getFileHashesCount();
-    expect(count).to.equal(2);
-  });
-
-  it("Should return the correct file hash at index", async function () {
-    const fileHash1 =
-      "0x1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef";
-    const fileHash2 =
-      "0xabcdef1234567890abcdef1234567890abcdef1234567890abcdef1234567890";
-    const fileName1 = "test1.txt";
-    const fileName2 = "test2.txt";
-    const fileSize = 1000;
-
-    await fileHashRegistry
-      .connect(addr1)
-      .registerFileHash(fileHash1, fileName1, fileSize);
-    await fileHashRegistry
-      .connect(addr1)
-      .registerFileHash(fileHash2, fileName2, fileSize);
-
-    const hashAtIndex1 = await fileHashRegistry.getFileHashAtIndex(0);
-    const hashAtIndex2 = await fileHashRegistry.getFileHashAtIndex(1);
-
-    expect(hashAtIndex1).to.equal(fileHash1);
-    expect(hashAtIndex2).to.equal(fileHash2);
+      registerFile(fileName, fileSize)
+    ).to.be.revertedWithCustomError(fileHashRegistry, "FileAlreadyRegistered");
   });
 });

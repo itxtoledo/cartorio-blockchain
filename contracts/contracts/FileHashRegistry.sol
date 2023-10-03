@@ -1,54 +1,105 @@
-pragma solidity ^0.8.0;
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.19;
 
 import "@openzeppelin/contracts/access/AccessControl.sol";
-import "@openzeppelin/contracts/utils/structs/EnumerableSet.sol";
+import "@openzeppelin/contracts/utils/Counters.sol";
 
+/**
+ * @title FileHashRegistry
+ * @dev A contract to register information about files using their hashes.
+ */
 contract FileHashRegistry is AccessControl {
-    using EnumerableSet for EnumerableSet.Bytes32Set;
+    using Counters for Counters.Counter;
 
+    /**
+     * @dev Throws an error when a file is already registered.
+     */
+    error FileAlreadyRegistered();
+
+    /**
+     * @dev Struct representing a file entry.
+     * @param fileName The name of the file.
+     * @param fileSize The size of the file in bytes.
+     * @param timestamp The timestamp at which the file was registered.
+     * @param blockNumber The block number in which the file was registered.
+     */
     struct FileEntry {
         string fileName;
         uint256 fileSize;
         uint256 timestamp;
-        address sender;
         uint256 blockNumber;
     }
 
-    EnumerableSet.Bytes32Set private hashes;
+    /**
+     * @dev A counter that keeps track of the number of registered files.
+     */
+    Counters.Counter private registered;
 
-    bytes32 public constant REGISTRAR_ROLE = keccak256("REGISTRAR_ROLE");
-
+    /**
+     * @dev Mapping from file hashes to file entries.
+     */
     mapping(bytes32 => FileEntry) public fileEntries;
 
+    /**
+     * @dev Constructor for the contract.
+     * Grants the DEFAULT_ADMIN_ROLE to the deployer.
+     */
     constructor() {
-        _setupRole(DEFAULT_ADMIN_ROLE, msg.sender);
+        _grantRole(DEFAULT_ADMIN_ROLE, msg.sender);
     }
 
+    /**
+     * @dev Registers a file hash to the contract.
+     * @param fileHash The hash of the file to be registered.
+     * @param fileName The name of the file.
+     * @param fileSize The size of the file in bytes.
+     */
     function registerFileHash(
         bytes32 fileHash,
         string memory fileName,
         uint256 fileSize
-    ) public onlyRole(REGISTRAR_ROLE) {
-        require(!hashes.contains(fileHash), "Hash already exists");
+    ) public onlyRole(DEFAULT_ADMIN_ROLE) {
+        if (fileEntries[fileHash].blockNumber != 0) {
+            revert FileAlreadyRegistered();
+        }
 
-        FileEntry memory newEntry = FileEntry({
+        FileEntry memory file = FileEntry({
             fileName: fileName,
             fileSize: fileSize,
             timestamp: block.timestamp,
-            sender: msg.sender,
             blockNumber: block.number
         });
 
-        fileEntries[fileHash] = newEntry;
-        hashes.add(fileHash);
+        fileEntries[fileHash] = file;
+
+        registered.increment();
     }
 
-    function getFileHashesCount() public view returns (uint256) {
-        return hashes.length();
+    /**
+     * @dev Returns the number of registered files.
+     * @return The number of registered files.
+     */
+    function getFilesCount() public view returns (uint256) {
+        return registered.current();
     }
 
-    function getFileHashAtIndex(uint256 index) public view returns (bytes32) {
-        require(index < hashes.length(), "Index out of bounds");
-        return hashes.at(index);
+    /**
+     * @dev Returns the file entry for the given file hash.
+     * @param fileHash The hash of the file entry to be returned.
+     * @return The file entry for the given file hash.
+     */
+    function getFileEntryByHash(bytes32 fileHash)
+        external
+        view
+        returns (
+            string memory,
+            uint256,
+            uint256,
+            uint256
+        )
+    {
+        FileEntry memory file = fileEntries[fileHash];
+
+        return (file.fileName, file.fileSize, file.timestamp, file.blockNumber);
     }
 }
