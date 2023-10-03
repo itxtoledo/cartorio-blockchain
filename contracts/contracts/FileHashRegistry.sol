@@ -58,7 +58,7 @@ contract FileHashRegistry is AccessControl {
         bytes32 fileHash,
         string memory fileName,
         uint256 fileSize
-    ) public onlyRole(DEFAULT_ADMIN_ROLE) {
+    ) external onlyRole(DEFAULT_ADMIN_ROLE) {
         if (fileEntries[fileHash].blockNumber != 0) {
             revert FileAlreadyRegistered();
         }
@@ -79,7 +79,7 @@ contract FileHashRegistry is AccessControl {
      * @dev Returns the number of registered files.
      * @return The number of registered files.
      */
-    function getFilesCount() public view returns (uint256) {
+    function getFilesCount() external view returns (uint256) {
         return registered.current();
     }
 
