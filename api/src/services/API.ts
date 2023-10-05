@@ -1,23 +1,37 @@
+import "express-async-errors";
+import { IDI } from "../types/di";
 import express from "express";
-import { authRouter } from "../routes/auth";
-import { env } from "../env";
+import compression from "compression";
 import helmet from "helmet";
 import cors from "cors";
-import compression from "compression";
+import { handleErrors, logErrors } from "../utils/handles";
+import { env } from "../env";
+import { authRouter } from "../routes/auth";
 import { registryRouter } from "../routes/registrar";
+import { RequestContext } from "@mikro-orm/core";
 
 export class API {
-  private app: express.Express;
+  public app: express.Express;
+  private di: IDI;
 
-  constructor() {
+  constructor(di: IDI) {
     this.app = express();
+    this.di = di;
   }
 
-  start(): void {
+  async start() {
     this.app.use(helmet());
     this.app.use(compression());
-    this.app.use(express.urlencoded({ extended: true }));
     this.app.use(express.json());
+    this.app.use(express.urlencoded({ extended: true }));
+
+    this.app.use((req, res, next) => {
+      res.locals = {
+        di: this.di,
+        user: null,
+      };
+      next();
+    });
 
     this.app.use(
       cors({
@@ -27,14 +41,18 @@ export class API {
       })
     );
 
-    this.app.use("/auth", authRouter);
-    this.app.use("/notary", registryRouter);
-    this.app.listen(env.PORT, () => {
-      console.log(`Server started...`);
-    });
+    this.app.use((req, res, next) =>
+      RequestContext.create(this.di.orm.em, next)
+    );
+
+    this.app.use("/v1", authRouter);
+    this.app.use("/v1", registryRouter);
+
+    this.app.use(logErrors);
+    this.app.use(handleErrors);
+
+    this.app.listen(env.PORT);
   }
 
-  stop() {
-    this.app.removeAllListeners();
-  }
+  async stop() {}
 }

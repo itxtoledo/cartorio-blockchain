@@ -13,7 +13,7 @@ describe("FileHashRegistry", () => {
   });
 
   const registerFile = async (fileName: string, fileSize: number) => {
-    const fileHash = ethers.hashMessage(fileName);
+    const fileHash = ethers.encodeBytes32String(fileName);
     await fileHashRegistry.registerFileHash(fileHash, fileName, fileSize);
     return fileHash;
   };
