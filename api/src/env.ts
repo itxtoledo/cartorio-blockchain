@@ -12,6 +12,11 @@ export const env = cleanEnv(process.env, {
   MAIL_USER: str(),
   MAIL_PASS: str(),
 
+  DB_HOST: str(),
+  DB_NAME: str(),
+  DB_USER: str(),
+  DB_PASS: str(),
+
   RPC_URL: str({
     example: "https://alfajores-forno.celo-testnet.org",
   }),
