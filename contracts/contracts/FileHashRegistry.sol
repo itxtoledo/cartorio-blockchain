@@ -2,15 +2,12 @@
 pragma solidity ^0.8.19;
 
 import "@openzeppelin/contracts/access/AccessControl.sol";
-import "@openzeppelin/contracts/utils/Counters.sol";
 
 /**
  * @title FileHashRegistry
  * @dev A contract to register information about files using their hashes.
  */
 contract FileHashRegistry is AccessControl {
-    using Counters for Counters.Counter;
-
     /**
      * @dev Throws an error when a file is already registered.
      */
@@ -24,7 +21,7 @@ contract FileHashRegistry is AccessControl {
      * @param blockNumber The block number in which the file was registered.
      */
     struct FileEntry {
-        string fileName;
+        bytes32 fileName;
         uint256 fileSize;
         uint256 timestamp;
         uint256 blockNumber;
@@ -33,7 +30,7 @@ contract FileHashRegistry is AccessControl {
     /**
      * @dev A counter that keeps track of the number of registered files.
      */
-    Counters.Counter private registered;
+    uint256 public registered;
 
     /**
      * @dev Mapping from file hashes to file entries.
@@ -56,31 +53,21 @@ contract FileHashRegistry is AccessControl {
      */
     function registerFileHash(
         bytes32 fileHash,
-        string memory fileName,
+        bytes32 fileName,
         uint256 fileSize
     ) external onlyRole(DEFAULT_ADMIN_ROLE) {
         if (fileEntries[fileHash].blockNumber != 0) {
             revert FileAlreadyRegistered();
         }
 
-        FileEntry memory file = FileEntry({
+        fileEntries[fileHash] = FileEntry({
             fileName: fileName,
             fileSize: fileSize,
             timestamp: block.timestamp,
             blockNumber: block.number
         });
 
-        fileEntries[fileHash] = file;
-
-        registered.increment();
-    }
-
-    /**
-     * @dev Returns the number of registered files.
-     * @return The number of registered files.
-     */
-    function getFilesCount() external view returns (uint256) {
-        return registered.current();
+        registered++;
     }
 
     /**
@@ -92,7 +79,7 @@ contract FileHashRegistry is AccessControl {
         external
         view
         returns (
-            string memory,
+            bytes32,
             uint256,
             uint256,
             uint256

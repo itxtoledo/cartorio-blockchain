@@ -14,7 +14,11 @@ describe("FileHashRegistry", () => {
 
   const registerFile = async (fileName: string, fileSize: number) => {
     const fileHash = ethers.encodeBytes32String(fileName);
-    await fileHashRegistry.registerFileHash(fileHash, fileName, fileSize);
+    await fileHashRegistry.registerFileHash(
+      fileHash,
+      ethers.encodeBytes32String(fileName),
+      fileSize
+    );
     return fileHash;
   };
 
@@ -26,21 +30,21 @@ describe("FileHashRegistry", () => {
 
     const fileEntry = await fileHashRegistry.getFileEntryByHash(fileHash);
 
-    expect(fileEntry[0]).to.equal(fileName);
+    expect(ethers.decodeBytes32String(fileEntry[0])).to.equal(fileName);
     expect(fileEntry[1]).to.equal(fileSize);
     expect(fileEntry[2]).to.be.above(0);
     expect(fileEntry[3]).to.be.above(0);
   });
 
   it("should return correct files count", async () => {
-    const initialCount = await fileHashRegistry.getFilesCount();
+    const initialCount = await fileHashRegistry.registered();
 
     const fileName = "test.txt";
     const fileSize = 100;
 
     await registerFile(fileName, fileSize);
 
-    const finalCount = await fileHashRegistry.getFilesCount();
+    const finalCount = await fileHashRegistry.registered();
 
     expect(finalCount).to.equal(initialCount + 1n);
   });
