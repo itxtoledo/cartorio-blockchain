@@ -4,6 +4,10 @@
 
 Este é um projeto de contrato inteligente para um cartório descentralizado baseado na tecnologia blockchain. O contrato permite o registro seguro e imutável de documentos e transações, garantindo a integridade dos dados e a autenticidade dos registros.
 
+## Live-demo
+
+- Contrato na blockchain: https://alfajores.celoscan.io/address/0xdB20A06F2Aa428110c1BBB8bF8BBC87725f9fBa5#code
+
 ## Funcionalidades :gear:
 
 - Registro de documentos com carimbo de data e hora :calendar:
@@ -13,8 +17,7 @@ Este é um projeto de contrato inteligente para um cartório descentralizado bas
 
 - Hardhat :hammer_and_wrench:
 - Solidity :diamond_shape_with_a_dot_inside:
-- Ethereum Blockchain :chains:
-- Truffle Dashboard :trident:
+- Celo Blockchain :chains:
 
 ## Como rodar o projeto :rocket:
 

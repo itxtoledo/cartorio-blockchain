@@ -27,9 +27,11 @@ export class BlockchainService {
   ) {
     const res = await this.contract.registerFileHash(
       encodeBytes32String(fileHash),
-      fileName,
+      encodeBytes32String(fileName),
       fileSize
     );
+
+    console.log("registerFileHash", res);
 
     return res;
   }
@@ -38,6 +40,8 @@ export class BlockchainService {
     const res = await this.contract.getFileEntryByHash(
       encodeBytes32String(fileHash)
     );
+
+    console.log("getFileEntryByHash", res);
 
     return res;
   }

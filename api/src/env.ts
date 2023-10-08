@@ -13,7 +13,7 @@ export const env = cleanEnv(process.env, {
   MAIL_PASS: str(),
 
   RPC_URL: str({
-    example: "https://forno.celo.org",
+    example: "https://alfajores-forno.celo-testnet.org",
   }),
 
   CONTRACT: str(),
