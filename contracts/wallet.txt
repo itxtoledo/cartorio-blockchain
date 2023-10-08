@@ -1,3 +1,5 @@
+## This is a public wallet, do not use with real funds
+
 address: 0x608363210A22Da2520bccAFD15fc021d4fF04ac6
 mnemonic: feature just shy sea vivid interest comic child master chef attack horse
 privateKey: 0x528b42ecbbc85d3f70c22c172f893681f7c47b0ff4cbbaa104749a2572fdbf98
