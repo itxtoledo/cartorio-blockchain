@@ -1,13 +1,13 @@
 import express from "express";
+import { AuthController } from "../controllers/AuthController";
 
-const route = express.Router();
+const routes = express.Router();
+const controller = new AuthController();
 
-route.post("/register", (req, res) => {});
+routes.post("/auth/register", controller.register);
+routes.post("/auth/login", controller.login);
+routes.post("/auth/oauth-login", controller.oauthLogin);
+routes.post("/auth/lost-password", controller.lostPassword);
+routes.post("/auth/reset-password", controller.resetPassword);
 
-route.post("/login", (req, res) => {});
-
-route.post("/lost-password", (req, res) => {});
-
-route.post("/reset-password", (req, res) => {});
-
-export { route as authRouter };
+export { routes as authRouter };

@@ -13,6 +13,7 @@ import Register from "./pages/auth/Register";
 import "bootswatch/dist/litera/bootstrap.min.css";
 import { useAuth } from "./hooks/useAuth";
 import NotarizeDocument from "./pages/notary/NotarizeDocument";
+import VerifyDocument from "./pages/notary/VerifyDocument";
 
 const RequireAuth: React.FC<{ children: React.ReactElement }> = ({
   children,
@@ -65,8 +66,15 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
               </PublicRoute>
             }
           >
-            <Route path="notarize-document" element={<NotarizeDocument />} />
-            <Route path="verify-document" element={<NotarizeDocument />} />
+            <Route
+              path="notarize-document"
+              element={
+                <RequireAuth>
+                  <NotarizeDocument />
+                </RequireAuth>
+              }
+            />
+            <Route path="verify-document" element={<VerifyDocument />} />
           </Route>
         </Routes>
       </AuthProvider>

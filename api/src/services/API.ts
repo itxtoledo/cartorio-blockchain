@@ -7,8 +7,11 @@ import cors from "cors";
 import { handleErrors, logErrors } from "../utils/handles";
 import { env } from "../env";
 import { authRouter } from "../routes/auth";
-import { registryRouter } from "../routes/registrar";
+import { notaryRouter } from "../routes/notary";
 import { RequestContext } from "@mikro-orm/core";
+import Logger from "../utils/Logger";
+
+const logger = Logger("API");
 
 export class API {
   public app: express.Express;
@@ -46,12 +49,14 @@ export class API {
     );
 
     this.app.use("/v1", authRouter);
-    this.app.use("/v1", registryRouter);
+    this.app.use("/v1", notaryRouter);
 
     this.app.use(logErrors);
     this.app.use(handleErrors);
 
-    this.app.listen(env.PORT);
+    this.app.listen(env.PORT, () => {
+      logger.info(`listening port ${env.PORT}`);
+    });
   }
 
   async stop() {}

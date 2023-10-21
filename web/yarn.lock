@@ -220,6 +220,11 @@
     "@babel/helper-validator-identifier" "^7.22.19"
     to-fast-properties "^2.0.0"
 
+"@coinsamba/react-tiny-hooks@^1.0.0":
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/@coinsamba/react-tiny-hooks/-/react-tiny-hooks-1.0.0.tgz#4459d384a3721b746656de7e05f0e16ed16e7e51"
+  integrity sha512-uLZuVfCoiiTUmAcYAcpSI5Py/HygmMfuho21+occ9zrluBXd4NuVUhUZqEbf8aL5Hagwo45ZyiHQpMtY/HtG4Q==
+
 "@esbuild/android-arm64@0.18.20":
   version "0.18.20"
   resolved "https://registry.yarnpkg.com/@esbuild/android-arm64/-/android-arm64-0.18.20.tgz#984b4f9c8d0377443cc2dfcef266d02244593622"

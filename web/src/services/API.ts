@@ -1,6 +1,7 @@
 import axios, { AxiosError, AxiosInstance } from "axios";
 import {
   BaseApiError,
+  CheckDocumentResponse,
   GenericResponse,
   LoginParameters,
   LoginResponse,
@@ -29,14 +30,17 @@ export class API {
   }
 
   async login(parameters: LoginParameters) {
-    const res = await this.api.post<LoginResponse>("/auth/login", parameters);
+    const res = await this.api.post<LoginResponse>(
+      "/v1/auth/login",
+      parameters
+    );
 
     return res.data;
   }
 
   async register(parameters: RegisterParameters) {
     const res = await this.api.post<RegisterResponse>(
-      "/auth/register",
+      "/v1/auth/register",
       parameters
     );
 
@@ -45,7 +49,7 @@ export class API {
 
   async lostPassword(parameters: LostPasswordParameters) {
     const res = await this.api.post<GenericResponse>(
-      "/auth/lost-password",
+      "/v1/auth/lost-password",
       parameters
     );
 
@@ -54,7 +58,7 @@ export class API {
 
   async resetPassword(parameters: ResetPasswordParameters) {
     const res = await this.api.post<GenericResponse>(
-      "/auth/reset-password",
+      "/v1/auth/reset-password",
       parameters
     );
 
@@ -63,19 +67,11 @@ export class API {
 
   async registerDocument(document: File) {
     const formData = new FormData();
-    console.log(document, typeof document);
 
     formData.append("file", document);
-    formData.append("user", "2");
-
-    console.log(formData.keys());
-
-    for (const [key, value] of formData.entries()) {
-      console.log(key, value);
-    }
 
     const res = await this.api.post<GenericResponse>(
-      "/notary/register",
+      "/v1/notary/register",
       formData,
       {
         headers: {
@@ -84,7 +80,23 @@ export class API {
       }
     );
 
-    console.log(res);
+    return res.data;
+  }
+
+  async checkDocument(document: File) {
+    const formData = new FormData();
+
+    formData.append("file", document);
+
+    const res = await this.api.post<CheckDocumentResponse>(
+      "/v1/notary/check",
+      formData,
+      {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      }
+    );
 
     return res.data;
   }

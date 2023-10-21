@@ -21,5 +21,7 @@ export const env = cleanEnv(process.env, {
     example: "https://alfajores-forno.celo-testnet.org",
   }),
 
+  PRIVATE_KEY: str(),
+
   CONTRACT: str(),
 });

@@ -1,5 +1,6 @@
+import { useToggle } from "@coinsamba/react-tiny-hooks";
 import React from "react";
-import { Outlet } from "react-router-dom";
+import { Link, Outlet } from "react-router-dom";
 import {
   Navbar,
   NavbarBrand,
@@ -7,60 +8,47 @@ import {
   Collapse,
   Nav,
   NavItem,
-  UncontrolledDropdown,
-  DropdownToggle,
-  DropdownMenu,
-  DropdownItem,
-  NavbarText,
   NavLink,
 } from "reactstrap";
 
 // import { Container } from './styles';
 
 const SiteTemplate: React.FC = () => {
+  const [isOpen, toggle] = useToggle();
+
   return (
-    <div className="d-flex flex-column h-100">
-      <header>
-        <Navbar color="dark" dark>
-          <NavbarBrand href="/">Cartório Blockchain</NavbarBrand>
-          <NavbarToggler onClick={() => {}} />
-          <Collapse isOpen={false} navbar>
-            <Nav className="me-auto" navbar>
-              <NavItem>
-                <NavLink href="/components/">Components</NavLink>
-              </NavItem>
-              <NavItem>
-                <NavLink href="https://github.com/reactstrap/reactstrap">
-                  GitHub
-                </NavLink>
-              </NavItem>
-              <UncontrolledDropdown nav inNavbar>
-                <DropdownToggle nav caret>
-                  Options
-                </DropdownToggle>
-                <DropdownMenu right>
-                  <DropdownItem>Option 1</DropdownItem>
-                  <DropdownItem>Option 2</DropdownItem>
-                  <DropdownItem divider />
-                  <DropdownItem>Reset</DropdownItem>
-                </DropdownMenu>
-              </UncontrolledDropdown>
-            </Nav>
-            <NavbarText>Simple Text</NavbarText>
-          </Collapse>
-        </Navbar>
-      </header>
-      <main className="h-100 d-flex bg-body-tertiary">
-        <Outlet />
-      </main>
-      <footer className="footer mt-auto py-3 bg-body-secondary ">
-        <div className="container">
-          <span className="text-body-secondary">
-            Place sticky footer content here.
-          </span>
-        </div>
-      </footer>
-    </div>
+    <>
+      <Navbar color="dark" dark expand="md" container="fluid">
+        <NavbarBrand href="/">Cartório Blockchain</NavbarBrand>
+        <NavbarToggler onClick={toggle} />
+        <Collapse isOpen={isOpen} navbar>
+          <Nav className="me-auto" navbar>
+            <NavItem>
+              <NavLink tag={Link} to="/notary/verify-document">
+                Verificar Autenticidade
+              </NavLink>
+            </NavItem>
+            <NavItem>
+              <NavLink tag={Link} to="/notary/notarize-document">
+                Registrar Documento
+              </NavLink>
+            </NavItem>
+          </Nav>
+        </Collapse>
+      </Navbar>
+      <div className="d-flex flex-column h-100">
+        <main className="h-100 d-flex bg-body-tertiary">
+          <Outlet />
+        </main>
+        <footer className="footer mt-auto py-3 bg-body-secondary ">
+          <div className="container">
+            <span className="text-body-secondary">
+              USO DA BLOCKCHAIN PARA AUTENTICIDADE DE DOCUMENTOS
+            </span>
+          </div>
+        </footer>
+      </div>
+    </>
   );
 };
 

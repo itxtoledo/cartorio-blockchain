@@ -11,7 +11,7 @@ export class BlockchainService {
   }
 
   private async instantiateContract(provider: ethers.JsonRpcProvider) {
-    const signer = await provider.getSigner();
+    const signer = new ethers.Wallet(env.PRIVATE_KEY, provider);
 
     this.contract = new ethers.Contract(
       env.CONTRACT,
@@ -37,12 +37,13 @@ export class BlockchainService {
   }
 
   public async getFileEntryByHash(fileHash: string) {
-    const res = await this.contract.getFileEntryByHash(
-      encodeBytes32String(fileHash)
-    );
+    const res = await this.contract.getFileEntryByHash(fileHash);
 
-    console.log("getFileEntryByHash", res);
-
-    return res;
+    return {
+      fileName: res[0] as string,
+      fileSize: (res[1] as BigInt).toString(),
+      timestamp: (res[2] as BigInt).toString(),
+      blockNumber: (res[3] as BigInt).toString(),
+    };
   }
 }

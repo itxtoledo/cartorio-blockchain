@@ -110,7 +110,7 @@ const Login: React.FC = () => {
               Registre-se aqui.
             </Link>
           </p>
-          <p className="mt-3 mb-3 text-muted">© 2022-2023</p>
+          <p className="mt-3 mb-3 text-muted">© 2023-2023</p>
         </Form>
       </Card>
     </div>

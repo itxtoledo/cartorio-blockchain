@@ -27,6 +27,13 @@ export interface GenericResponse {
   success: boolean;
 }
 
+export interface CheckDocumentResponse {
+  fileName: string;
+  fileSize: string;
+  timestamp: string;
+  blockNumber: string;
+}
+
 export interface BaseApiError {
   message: string;
 }

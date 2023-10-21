@@ -26,7 +26,7 @@ export class FileRepository {
       });
 
       readStream.on("end", () => {
-        resolve([file, hash.digest("hex")]);
+        resolve([file, `0x${hash.digest("hex")}`]);
       });
 
       readStream.on("error", (error) => {

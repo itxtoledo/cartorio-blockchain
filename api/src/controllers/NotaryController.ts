@@ -1,7 +1,7 @@
 import express from "express";
 import { FileRepository } from "../repositories/FileRepository";
 
-export class RegistrarController {
+export class NotaryController {
   private fileRepository: FileRepository;
   constructor() {
     this.fileRepository = new FileRepository();
@@ -30,9 +30,7 @@ export class RegistrarController {
       fileHash
     );
 
-    return res.json({
-      exists: fileData.fileName != "",
-    });
+    return res.json(fileData);
   }
 
   async getDocumentDetails(req: express.Request, res: express.Response) {
