@@ -1,4 +1,4 @@
-import { ChangeEvent, useRef, useEffect, useCallback, useState } from "react";
+import { useRef, useEffect } from "react";
 import { useField } from "@unform/core";
 
 interface Props {
@@ -10,20 +10,7 @@ type InputProps = JSX.IntrinsicElements["input"] & Props;
 export default function ImageInput({ name, ...rest }: InputProps) {
   const inputRef = useRef<HTMLInputElement>(null);
 
-  const { fieldName, registerField, defaultValue } = useField(name);
-  const [preview, setPreview] = useState(defaultValue);
-
-  const handlePreview = useCallback((e: ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-
-    if (!file) {
-      setPreview(null);
-    } else {
-      const previewURL = URL.createObjectURL(file);
-
-      setPreview(previewURL);
-    }
-  }, []);
+  const { fieldName, registerField } = useField(name);
 
   useEffect(() => {
     registerField({
@@ -32,23 +19,13 @@ export default function ImageInput({ name, ...rest }: InputProps) {
       path: "files[0]",
       clearValue(ref: HTMLInputElement) {
         ref.value = "";
-        setPreview(null);
-      },
-      setValue(_: HTMLInputElement, value: string) {
-        setPreview(value);
       },
     });
   }, [fieldName, registerField]);
 
   return (
     <>
-      <input
-        type="file"
-        ref={inputRef}
-        onChange={handlePreview}
-        {...rest}
-        className="form-control"
-      />
+      <input type="file" ref={inputRef} {...rest} className="form-control" />
     </>
   );
 }
