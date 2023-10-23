@@ -36,7 +36,7 @@ const PublicRoute: React.FC<{ children: React.ReactElement }> = ({
     return <p>Loading...</p>;
   }
 
-  return !auth.user ? children : <Navigate to="/dashboard" />;
+  return !auth.user ? children : <Navigate to="/notary/notarize-document" />;
 };
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
@@ -58,14 +58,7 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
             <Route path="lost-password" element={<LostPassword />} />
             <Route path="reset-password" element={<ResetPassword />} />
           </Route>
-          <Route
-            path="/notary"
-            element={
-              <PublicRoute>
-                <SiteTemplate />
-              </PublicRoute>
-            }
-          >
+          <Route path="/notary" element={<SiteTemplate />}>
             <Route
               path="notarize-document"
               element={

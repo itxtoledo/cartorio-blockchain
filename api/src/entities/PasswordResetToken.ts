@@ -2,10 +2,11 @@ import { Entity, Property, ManyToOne, Unique } from "@mikro-orm/core";
 import { User } from "./User";
 import crypto from "crypto";
 import { addMinutes } from "date-fns";
+import { CustomBaseEntity } from "./CustomBaseEntity";
 
 @Entity()
 @Unique({ properties: ["token"] })
-export class PasswordResetToken {
+export class PasswordResetToken extends CustomBaseEntity {
   @Property()
   token?: string = crypto.randomBytes(6).toString("hex");
 

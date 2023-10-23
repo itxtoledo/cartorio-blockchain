@@ -6,7 +6,7 @@ import express from "express";
 export class FileRepository {
   public async getFileHash(
     req: express.Request
-  ): Promise<[formidable.File, string]> {
+  ): Promise<[formidable.File, string, string]> {
     const form = new formidable.IncomingForm({
       maxFiles: 1,
       maxFields: 2,
@@ -26,7 +26,14 @@ export class FileRepository {
       });
 
       readStream.on("end", () => {
-        resolve([file, `0x${hash.digest("hex")}`]);
+        resolve([
+          file,
+          `0x${hash.digest("hex")}`,
+          `0x${crypto
+            .createHash("sha256")
+            .update(file.originalFilename!)
+            .digest("hex")}`,
+        ]);
       });
 
       readStream.on("error", (error) => {

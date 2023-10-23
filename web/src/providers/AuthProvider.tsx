@@ -62,8 +62,6 @@ const AuthProvider: React.FC<{ children: React.ReactElement }> = ({
     const parsedToken = jwt ? jwtDecode<IUser & { exp: number }>(jwt) : null;
 
     if (parsedToken) {
-      console.log(parsedToken);
-
       Storage.set(TOKEN_KEY, jwt);
 
       setUser(parsedToken);

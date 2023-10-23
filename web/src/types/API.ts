@@ -27,11 +27,19 @@ export interface GenericResponse {
   success: boolean;
 }
 
+export interface RegisterDocumentResponse {
+  txid: string;
+  blockNumber: number;
+  fileHash: string;
+}
+
 export interface CheckDocumentResponse {
   fileName: string;
   fileSize: string;
   timestamp: string;
   blockNumber: string;
+  fileHash: string;
+  txid: string;
 }
 
 export interface BaseApiError {

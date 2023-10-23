@@ -6,6 +6,27 @@ export const FileHashRegistryABI = [
   },
   {
     inputs: [],
+    name: "AccessControlBadConfirmation",
+    type: "error",
+  },
+  {
+    inputs: [
+      {
+        internalType: "address",
+        name: "account",
+        type: "address",
+      },
+      {
+        internalType: "bytes32",
+        name: "neededRole",
+        type: "bytes32",
+      },
+    ],
+    name: "AccessControlUnauthorizedAccount",
+    type: "error",
+  },
+  {
+    inputs: [],
     name: "FileAlreadyRegistered",
     type: "error",
   },
@@ -108,9 +129,9 @@ export const FileHashRegistryABI = [
     name: "fileEntries",
     outputs: [
       {
-        internalType: "string",
+        internalType: "bytes32",
         name: "fileName",
-        type: "string",
+        type: "bytes32",
       },
       {
         internalType: "uint256",
@@ -142,9 +163,9 @@ export const FileHashRegistryABI = [
     name: "getFileEntryByHash",
     outputs: [
       {
-        internalType: "string",
+        internalType: "bytes32",
         name: "",
-        type: "string",
+        type: "bytes32",
       },
       {
         internalType: "uint256",
@@ -156,19 +177,6 @@ export const FileHashRegistryABI = [
         name: "",
         type: "uint256",
       },
-      {
-        internalType: "uint256",
-        name: "",
-        type: "uint256",
-      },
-    ],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
-    inputs: [],
-    name: "getFilesCount",
-    outputs: [
       {
         internalType: "uint256",
         name: "",
@@ -247,9 +255,9 @@ export const FileHashRegistryABI = [
         type: "bytes32",
       },
       {
-        internalType: "string",
+        internalType: "bytes32",
         name: "fileName",
-        type: "string",
+        type: "bytes32",
       },
       {
         internalType: "uint256",
@@ -263,6 +271,19 @@ export const FileHashRegistryABI = [
     type: "function",
   },
   {
+    inputs: [],
+    name: "registered",
+    outputs: [
+      {
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
     inputs: [
       {
         internalType: "bytes32",
@@ -271,7 +292,7 @@ export const FileHashRegistryABI = [
       },
       {
         internalType: "address",
-        name: "account",
+        name: "callerConfirmation",
         type: "address",
       },
     ],

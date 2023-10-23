@@ -1,4 +1,4 @@
-import { encodeBytes32String, ethers, hashMessage } from "ethers";
+import { encodeBytes32String, ethers } from "ethers";
 import { env } from "../env";
 import { FileHashRegistryABI } from "../static/FileHashRegistryABI";
 
@@ -24,16 +24,19 @@ export class BlockchainService {
     fileHash: string,
     fileName: string,
     fileSize: number
-  ) {
-    const res = await this.contract.registerFileHash(
-      encodeBytes32String(fileHash),
-      encodeBytes32String(fileName),
-      fileSize
-    );
+  ): Promise<ethers.ContractTransactionReceipt> {
+    const res = (await this.contract.registerFileHash(
+      fileHash,
+      fileName,
+      fileSize,
+      {
+        gasLimit: "500000",
+      }
+    )) as ethers.ContractTransactionResponse;
 
-    console.log("registerFileHash", res);
+    const waited = await res.wait();
 
-    return res;
+    return waited!;
   }
 
   public async getFileEntryByHash(fileHash: string) {

@@ -82,25 +82,13 @@ const Register: React.FC = () => {
           </FormGroup>
 
           <FormGroup>
-            <Label htmlFor="firstName">Primeiro nome</Label>
+            <Label htmlFor="name">Nome</Label>
             <UnformInput
               type="text"
-              id="firstName"
-              placeholder="Primeiro nome"
-              name="firstName"
-              autoComplete="given-name"
-              required
-            />
-          </FormGroup>
-
-          <FormGroup>
-            <Label htmlFor="lastName">Último nome</Label>
-            <UnformInput
-              type="text"
-              id="lastName"
+              id="name"
               placeholder="Nome"
-              name="lastName"
-              autoComplete="family-name"
+              name="name"
+              autoComplete="name"
               required
             />
           </FormGroup>

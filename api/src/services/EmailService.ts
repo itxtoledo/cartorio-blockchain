@@ -18,7 +18,7 @@ class EmailService {
 
   async sendMail(subject: string, text: string, to: string) {
     return this.transporter.sendMail({
-      from: `Cartório Blockchaina <no-reply@cartorio-blockchain.com>`, // sender address
+      from: `Cartório Blockchain <no-reply@cartorio-blockchain.com>`, // sender address
       to, // list of receivers
       subject: `[Cartório Blockchain] ${subject}`, // Subject line
       text, // plain text body

@@ -9,6 +9,7 @@ import { API } from "../services/API";
 import { BlockchainService } from "../services/BlockchainService";
 import { PasswordResetToken } from "../entities/PasswordResetToken";
 import { EmailService } from "../services/EmailService";
+import { FileRegistry } from "../entities/FileRegistry";
 
 export interface IDI {
   API: API;
@@ -21,4 +22,5 @@ export interface IDI {
   // entities
   userRepository: EntityRepository<User>;
   passwordResetTokenRepository: EntityRepository<PasswordResetToken>;
+  fileRegistryRepository: EntityRepository<FileRegistry>;
 }

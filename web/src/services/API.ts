@@ -6,6 +6,7 @@ import {
   LoginParameters,
   LoginResponse,
   LostPasswordParameters,
+  RegisterDocumentResponse,
   RegisterParameters,
   RegisterResponse,
   ResetPasswordParameters,
@@ -70,7 +71,7 @@ export class API {
 
     formData.append("file", document);
 
-    const res = await this.api.post<GenericResponse>(
+    const res = await this.api.post<RegisterDocumentResponse>(
       "/v1/notary/register",
       formData,
       {

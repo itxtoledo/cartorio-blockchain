@@ -5,6 +5,7 @@ import { IDI } from "./types/di";
 import { EmailService } from "./services/EmailService";
 import { User } from "./entities/User";
 import { PasswordResetToken } from "./entities/PasswordResetToken";
+import { FileRegistry } from "./entities/FileRegistry";
 
 export const DI = {} as IDI;
 
@@ -16,6 +17,7 @@ const main = async () => {
   // entities
   DI.userRepository = DI.orm.em.getRepository(User);
   DI.passwordResetTokenRepository = DI.orm.em.getRepository(PasswordResetToken);
+  DI.fileRegistryRepository = DI.orm.em.getRepository(FileRegistry);
 
   // services
   DI.emailService = new EmailService();
