@@ -10,10 +10,10 @@ import {
   NavItem,
   NavLink,
 } from "reactstrap";
-
-// import { Container } from './styles';
+import { useAuth } from "../../hooks/useAuth";
 
 const SiteTemplate: React.FC = () => {
+  const auth = useAuth();
   const [isOpen, toggle] = useToggle();
 
   return (
@@ -33,6 +33,13 @@ const SiteTemplate: React.FC = () => {
                 Registrar Documento
               </NavLink>
             </NavItem>
+            {auth.user && (
+              <NavItem>
+                <NavLink tag={Link} onClick={() => auth.logout()}>
+                  Sair
+                </NavLink>
+              </NavItem>
+            )}
           </Nav>
         </Collapse>
       </Navbar>
@@ -43,7 +50,8 @@ const SiteTemplate: React.FC = () => {
         <footer className="footer mt-auto py-3 bg-body-secondary ">
           <div className="container">
             <span className="text-body-secondary">
-              UM EXEMPLO DE APLICAÇÃO DO USO DA BLOCKCHAIN PARA AUTENTICIDADE DE DOCUMENTOS
+              UM EXEMPLO DE APLICAÇÃO DO USO DA BLOCKCHAIN PARA AUTENTICIDADE DE
+              DOCUMENTOS
             </span>
           </div>
         </footer>

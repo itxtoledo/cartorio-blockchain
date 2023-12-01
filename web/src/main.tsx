@@ -24,7 +24,7 @@ const RequireAuth: React.FC<{ children: React.ReactElement }> = ({
     return <p>Loading...</p>;
   }
 
-  return auth.user ? children : <Navigate to="/" />;
+  return auth.user ? children : <Navigate to="/auth/login" />;
 };
 
 const PublicRoute: React.FC<{ children: React.ReactElement }> = ({
