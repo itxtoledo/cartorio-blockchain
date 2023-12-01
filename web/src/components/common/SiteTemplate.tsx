@@ -43,7 +43,7 @@ const SiteTemplate: React.FC = () => {
         <footer className="footer mt-auto py-3 bg-body-secondary ">
           <div className="container">
             <span className="text-body-secondary">
-              USO DA BLOCKCHAIN PARA AUTENTICIDADE DE DOCUMENTOS
+              UM EXEMPLO DE APLICAÇÃO DO USO DA BLOCKCHAIN PARA AUTENTICIDADE DE DOCUMENTOS
             </span>
           </div>
         </footer>
