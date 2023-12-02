@@ -13,7 +13,7 @@ export class NotaryController {
     const [file, fileHash, fileNameHash] =
       await this.fileRepository.getFileHash(req);
 
-    let registryData: ethers.ContractTransactionReceipt;
+    let registryData: ethers.ContractTransactionResponse;
 
     const exists = await res.locals.di.fileRegistryRepository.count({
       hash: fileHash,
