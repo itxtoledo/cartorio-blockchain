@@ -12,7 +12,6 @@ import { ResetPasswordParameters } from "../../types/API";
 import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import CustomButton from "../../components/common/CustomButton";
 import { useAPI } from "../../hooks/useAPI";
-import LogoImage from "../../components/common/LogoImage";
 
 const ResetPassword: React.FC = () => {
   const navigate = useNavigate();
@@ -60,8 +59,8 @@ const ResetPassword: React.FC = () => {
     <div style={{ maxWidth: 500 }} className="m-auto">
       <Card body>
         <Form ref={formRef} onSubmit={onSubmit}>
-          <LogoImage />{" "}
           <h1 className="h3 mb-3 fw-normal">Redefinição de senha</h1>
+
           <FormGroup>
             <Label htmlFor="token">Código enviado por e-mail</Label>
             <UnformInput

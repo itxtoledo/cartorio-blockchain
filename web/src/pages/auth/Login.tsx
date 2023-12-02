@@ -63,7 +63,7 @@ const Login: React.FC = () => {
     <div style={{ maxWidth: 500 }} className="m-auto">
       <Card body>
         <Form style={{ maxWidth: 500 }} onSubmit={onSubmit} initialData={data}>
-          <h1 className="h3 mb-3 fw-normal">Por favor faça login</h1>
+          <h1 className="h3 mb-3 fw-normal">Login</h1>
 
           <FormGroup>
             <Label htmlFor="email">Email</Label>

@@ -58,6 +58,8 @@ const Register: React.FC = () => {
     <div style={{ maxWidth: 500 }} className="m-auto ">
       <Card body>
         <Form ref={formRef} onSubmit={onSubmit}>
+          <h1 className="h3 mb-3 fw-normal">Registro</h1>
+          
           <FormGroup>
             <Label htmlFor="email">Email</Label>
             <UnformInput

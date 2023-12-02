@@ -12,7 +12,6 @@ import { LostPasswordParameters } from "../../types/API";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import CustomButton from "../../components/common/CustomButton";
 import { useAPI } from "../../hooks/useAPI";
-import LogoImage from "../../components/common/LogoImage";
 
 const LostPassword: React.FC = () => {
   const navigate = useNavigate();
@@ -59,8 +58,8 @@ const LostPassword: React.FC = () => {
     <div style={{ maxWidth: 500 }} className="m-auto">
       <Card body>
         <Form ref={formRef} onSubmit={onSubmit}>
-          <LogoImage />
           <h1 className="h3 mb-3 fw-normal">Esqueci a senha</h1>
+
           <FormGroup>
             <Label htmlFor="email">Email</Label>
             <UnformInput
