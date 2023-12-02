@@ -29,7 +29,6 @@ export interface GenericResponse {
 
 export interface RegisterDocumentResponse {
   txid: string;
-  blockNumber: number;
   fileHash: string;
 }
 

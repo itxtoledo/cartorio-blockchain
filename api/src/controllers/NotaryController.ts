@@ -43,7 +43,6 @@ export class NotaryController {
 
     return res.json({
       txid: registryData.hash,
-      blockNumber: registryData.blockNumber,
       fileHash,
     });
   }

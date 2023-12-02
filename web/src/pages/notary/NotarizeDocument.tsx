@@ -55,14 +55,7 @@ const NotarizeDocument: React.FC = () => {
           <small>Extensões suportadas: pdf.</small>
         </FormGroup>
         <Alert color="success" isOpen={!!receipt}>
-          Documento registrado com sucesso no bloco{" "}
-          <a
-            href={`https://alfajores.celoscan.io/block/${receipt?.blockNumber}`}
-            target="_blank"
-          >
-            {receipt?.blockNumber} <FiExternalLink />
-          </a>
-          , TxID{" "}
+          Documento registrado com sucesso! TxID{" "}
           <a
             href={`https://alfajores.celoscan.io/tx/${receipt?.txid}`}
             target="_blank"
