@@ -38,44 +38,46 @@ const NotarizeDocument: React.FC = () => {
   };
 
   return (
-    <Card body style={{ maxWidth: 400 }} className="m-auto">
-      <Form ref={formRef} onSubmit={onSubmit}>
-        <h1 className="h3 mb-3 fw-normal">Registrar Documento</h1>
-        <hr />
-        <FormGroup>
-          <Label htmlFor="token">Documento</Label>
-          <ImageInput
-            type="file"
-            id="document"
-            placeholder="Documento"
-            name="document"
-            accept="application/pdf"
-            required
-          />
-          <small>Extensões suportadas: pdf.</small>
-        </FormGroup>
-        <Alert color="success" isOpen={!!receipt}>
-          Documento registrado com sucesso! TxID{" "}
-          <a
-            href={`https://alfajores.celoscan.io/tx/${receipt?.txid}`}
-            target="_blank"
+    <div style={{ maxWidth: 500 }} className="m-auto">
+      <Card body className="w-100">
+        <Form ref={formRef} onSubmit={onSubmit}>
+          <h1 className="h3 mb-3 fw-normal">Registrar Documento</h1>
+          <hr />
+          <FormGroup>
+            <Label htmlFor="token">Documento</Label>
+            <ImageInput
+              type="file"
+              id="document"
+              placeholder="Documento"
+              name="document"
+              accept="application/pdf"
+              required
+            />
+            <small>Extensões suportadas: pdf.</small>
+          </FormGroup>
+          <Alert color="success" isOpen={!!receipt}>
+            Documento registrado com sucesso! TxID{" "}
+            <a
+              href={`https://alfajores.celoscan.io/tx/${receipt?.txid}`}
+              target="_blank"
+            >
+              {receipt?.txid} <FiExternalLink />
+            </a>
+            .
+          </Alert>
+          <hr />
+          <CustomButton
+            block
+            size="lg"
+            type="submit"
+            color="primary"
+            loading={loading}
           >
-            {receipt?.txid} <FiExternalLink />
-          </a>
-          .
-        </Alert>
-        <hr />
-        <CustomButton
-          block
-          size="lg"
-          type="submit"
-          color="primary"
-          loading={loading}
-        >
-          Registrar
-        </CustomButton>
-      </Form>
-    </Card>
+            Registrar
+          </CustomButton>
+        </Form>
+      </Card>
+    </div>
   );
 };
 

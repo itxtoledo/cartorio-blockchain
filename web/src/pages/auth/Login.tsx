@@ -61,8 +61,8 @@ const Login: React.FC = () => {
 
   return (
     <div style={{ maxWidth: 500 }} className="m-auto">
-      <Card body>
-        <Form style={{ maxWidth: 500 }} onSubmit={onSubmit} initialData={data}>
+      <Card body className="w-100">
+        <Form onSubmit={onSubmit} initialData={data}>
           <h1 className="h3 mb-3 fw-normal">Login</h1>
 
           <FormGroup>

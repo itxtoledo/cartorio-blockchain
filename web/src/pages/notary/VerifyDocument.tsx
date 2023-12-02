@@ -49,104 +49,106 @@ const VerifyDocument: React.FC = () => {
   };
 
   return (
-    <Card body style={{ maxWidth: 400 }} className="m-auto">
-      <Form ref={formRef} onSubmit={onSubmit}>
-        <h1 className="h3 mb-3 fw-normal">Verificar Documento</h1>
-        <hr />
-        <FormGroup>
-          <Label htmlFor="token">Documento</Label>
-          <ImageInput
-            type="file"
-            id="document"
-            placeholder="Documento"
-            name="document"
-            accept="application/pdf"
-            required
-          />
-          <small>Extensões suportadas: pdf.</small>
-        </FormGroup>
-        <Alert isOpen={!!errorMessage} color="danger">
-          <ImWarning /> {errorMessage}
-        </Alert>
-        {receipt && (
-          <Card color="light" body>
-            <h4 className="mb-3">
-              <FiCheckCircle color="green" /> Documento certificado
-            </h4>
+    <div style={{ maxWidth: 500 }} className="m-auto">
+      <Card body className="w-100">
+        <Form ref={formRef} onSubmit={onSubmit}>
+          <h1 className="h3 mb-3 fw-normal">Verificar Documento</h1>
+          <hr />
+          <FormGroup>
+            <Label htmlFor="token">Documento</Label>
+            <ImageInput
+              type="file"
+              id="document"
+              placeholder="Documento"
+              name="document"
+              accept="application/pdf"
+              required
+            />
+            <small>Extensões suportadas: pdf.</small>
+          </FormGroup>
+          <Alert isOpen={!!errorMessage} color="danger">
+            <ImWarning /> {errorMessage}
+          </Alert>
+          {receipt && (
+            <Card color="light" body>
+              <h4 className="mb-3">
+                <FiCheckCircle color="green" /> Documento certificado
+              </h4>
 
-            <Table bordered hover stripped responsive className="mb-3">
-              <tbody>
-                <tr>
-                  <td>
-                    <b>Checksum</b>
-                  </td>
-                  <td>{receipt?.fileHash}</td>
-                </tr>
-                <tr>
-                  <td>
-                    <b>TxID</b>
-                  </td>
-                  <td>
-                    <a
-                      href={`https://alfajores.celoscan.io/tx/${receipt?.txid}`}
-                      target="_blank"
-                    >
-                      {abbreviateAddress(receipt?.txid)} <FiExternalLink />
-                    </a>
-                  </td>
-                </tr>
-                <tr>
-                  <td>
-                    <b>Bloco</b>
-                  </td>
-                  <td>
-                    <a
-                      href={`https://alfajores.celoscan.io/block/${receipt?.blockNumber}`}
-                      target="_blank"
-                    >
-                      {abbreviateAddress(receipt?.blockNumber)}{" "}
-                      <FiExternalLink />
-                    </a>
-                  </td>
-                </tr>
-                <tr>
-                  <td>
-                    <b>Registro</b>
-                  </td>
-                  <td>
-                    {format(
-                      fromUnixTime(Number(receipt!.timestamp!)),
-                      "dd/MM/yyy HH:mm:ss"
-                    )}
-                  </td>
-                </tr>
-              </tbody>
-            </Table>
-            <small>
-              Registrado na blockchain há{" "}
-              {formatDistance(
-                fromUnixTime(Number(receipt!.timestamp!)),
-                new Date(),
-                {
-                  locale: ptBrLocale,
-                }
-              )}
-              .
-            </small>
-          </Card>
-        )}
-        <hr />
-        <CustomButton
-          block
-          size="lg"
-          type="submit"
-          color="primary"
-          loading={loading}
-        >
-          Verificar
-        </CustomButton>
-      </Form>
-    </Card>
+              <Table bordered hover stripped responsive className="mb-3">
+                <tbody>
+                  <tr>
+                    <td>
+                      <b>Checksum</b>
+                    </td>
+                    <td>{receipt?.fileHash}</td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <b>TxID</b>
+                    </td>
+                    <td>
+                      <a
+                        href={`https://alfajores.celoscan.io/tx/${receipt?.txid}`}
+                        target="_blank"
+                      >
+                        {abbreviateAddress(receipt?.txid)} <FiExternalLink />
+                      </a>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <b>Bloco</b>
+                    </td>
+                    <td>
+                      <a
+                        href={`https://alfajores.celoscan.io/block/${receipt?.blockNumber}`}
+                        target="_blank"
+                      >
+                        {abbreviateAddress(receipt?.blockNumber)}{" "}
+                        <FiExternalLink />
+                      </a>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <b>Registro</b>
+                    </td>
+                    <td>
+                      {format(
+                        fromUnixTime(Number(receipt!.timestamp!)),
+                        "dd/MM/yyy HH:mm:ss"
+                      )}
+                    </td>
+                  </tr>
+                </tbody>
+              </Table>
+              <small>
+                Registrado na blockchain há{" "}
+                {formatDistance(
+                  fromUnixTime(Number(receipt!.timestamp!)),
+                  new Date(),
+                  {
+                    locale: ptBrLocale,
+                  }
+                )}
+                .
+              </small>
+            </Card>
+          )}
+          <hr />
+          <CustomButton
+            block
+            size="lg"
+            type="submit"
+            color="primary"
+            loading={loading}
+          >
+            Verificar
+          </CustomButton>
+        </Form>
+      </Card>
+    </div>
   );
 };
 

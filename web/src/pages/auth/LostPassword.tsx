@@ -56,7 +56,7 @@ const LostPassword: React.FC = () => {
 
   return (
     <div style={{ maxWidth: 500 }} className="m-auto">
-      <Card body>
+      <Card body className="w-100">
         <Form ref={formRef} onSubmit={onSubmit}>
           <h1 className="h3 mb-3 fw-normal">Esqueci a senha</h1>
 
