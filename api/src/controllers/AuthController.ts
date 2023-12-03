@@ -88,7 +88,7 @@ export class AuthController {
     );
 
     let message = `Hi ${user.name}, this is your temporary token: ${tokenCreated.token}`;
-    message += `\n\nClick on this link and set a new password https://hotgate.coinsamba.com/auth/reset-password?token=${tokenCreated.token}`;
+    message += `\n\nClick on this link and set a new password https://cartorio-blockchain.com/auth/reset-password?token=${tokenCreated.token}`;
     await res.locals.di.emailService.sendMail("Password reset", message, email);
     return handleMessage({ success: true }, res);
   }
