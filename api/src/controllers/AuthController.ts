@@ -87,9 +87,9 @@ export class AuthController {
       tokenCreated
     );
 
-    let message = `Hi ${user.name}, this is your temporary token: ${tokenCreated.token}`;
-    message += `\n\nClick on this link and set a new password https://cartorio-blockchain.com/auth/reset-password?token=${tokenCreated.token}`;
-    await res.locals.di.emailService.sendMail("Password reset", message, email);
+    let message = `Olá ${user.name}, esse é o seu token temporário: ${tokenCreated.token}`;
+    message += `\n\nClique nesse link e escolha uma nova senha https://cartorio-blockchain.com/auth/reset-password?token=${tokenCreated.token}`;
+    await res.locals.di.emailService.sendMail("Redefinição de Senha", message, email);
     return handleMessage({ success: true }, res);
   }
 
